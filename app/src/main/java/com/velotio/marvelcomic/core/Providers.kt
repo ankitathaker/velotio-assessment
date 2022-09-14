@@ -15,7 +15,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 private const val APP_DATABASE_NAME = "marvel_database.db"
 const val API_BASE_URL = "http://gateway.marvel.com/v1/public/"
 
-fun provideAppDatabase(context: Context) =
+fun provideAppDatabase(context: Context) : ApplicationDatabase =
     Room.databaseBuilder(context, ApplicationDatabase::class.java, APP_DATABASE_NAME).build()
 
 inline fun <reified T> provideRetrofitService(): T {

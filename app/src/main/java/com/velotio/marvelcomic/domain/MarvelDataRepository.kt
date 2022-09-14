@@ -1,0 +1,10 @@
+package com.velotio.marvelcomic.domain
+
+import com.velotio.marvelcomic.data_layer.DataSource
+import kotlinx.coroutines.flow.Flow
+
+interface MarvelDataRepository {
+    suspend fun getCharacters(dataSource: DataSource): Flow<List<CharacterEntity>>
+
+    suspend fun toggleCharacterBookmarkStatus(characterId: Long): Boolean
+}

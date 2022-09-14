@@ -2,6 +2,7 @@ package com.velotio.marvelcomic
 
 import android.app.Application
 import androidx.appcompat.app.AppCompatDelegate
+import com.velotio.marvelcomic.core.di.charactersModule
 import com.velotio.marvelcomic.core.provideAppDatabase
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
@@ -22,11 +23,17 @@ class MarvelComicApplication : Application() {
             /*
             * Initialized local database
             * */
-            module {
-                single {
-                    provideAppDatabase(get())
+            modules(
+                module {
+                    single {
+                        provideAppDatabase(get())
+                    }
                 }
-            }
+            )
+
+            modules(
+                charactersModule()
+            )
         }
     }
 }

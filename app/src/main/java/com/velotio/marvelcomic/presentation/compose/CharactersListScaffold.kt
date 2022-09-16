@@ -1,7 +1,6 @@
 package com.velotio.marvelcomic.presentation.compose
 
 import android.annotation.SuppressLint
-import android.widget.Toast
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -16,7 +15,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.swiperefresh.SwipeRefresh
@@ -26,34 +25,39 @@ import com.velotio.marvelcomic.presentation.state.CharacterViewState
 import com.velotio.marvelcomic.presentation.theme.MarvelComicTheme
 import com.velotio.marvelcomic.presentation.view_model.CharactersListViewModel
 import org.koin.androidx.compose.getViewModel
+import com.velotio.marvelcomic.R
+
+/*
+* Scaffold(Layout) for Characters list page
+* */
+
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun CharactersListScaffold(
+    showComics: (Long) -> Unit,
     closeAction: () -> Unit,
     modifier: Modifier = Modifier,
     charactersListViewModel: CharactersListViewModel = getViewModel()
 ) {
-    val context = LocalContext.current
-
     Scaffold(
         modifier = modifier,
         topBar = {
             TopAppBar(
                 title = {
-                    Text(text = "Characters")
+                    Text(text = stringResource(id = R.string.characters))
                 },
                 navigationIcon = {
                     IconButton(onClick = closeAction) {
                         Icon(
                             imageVector = Icons.Filled.Close,
-                            contentDescription = "Close Icon"
+                            contentDescription = stringResource(id = R.string.close_icon)
                         )
                     }
                 }
             )
         }
-    ) { _ ->
+    ) {
         val state = charactersListViewModel.characters.collectAsState()
 
         when (state.value) {
@@ -83,11 +87,7 @@ fun CharactersListScaffold(
                                 CharacterTile(
                                     state = state,
                                     characterSelectAction = {
-                                        Toast.makeText(
-                                            context,
-                                            "${state.name} selected!",
-                                            Toast.LENGTH_LONG
-                                        ).show()
+                                        showComics(state.id)
                                     },
                                     bookmarkAction = {
                                         charactersListViewModel.bookmarkCharacter(state.id)
@@ -117,6 +117,6 @@ fun CharactersListScaffold(
 @Composable
 private fun CharactersListScaffoldPreview() {
     MarvelComicTheme {
-        CharactersListScaffold(closeAction = {})
+        CharactersListScaffold(showComics = {}, closeAction = {})
     }
 }

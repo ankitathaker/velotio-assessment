@@ -5,11 +5,11 @@ import androidx.room.PrimaryKey
 import com.velotio.marvelcomic.data_layer.cache.dao.BaseCache
 
 @Entity
-data class CharacterCache(
+data class ComicsCache(
     @PrimaryKey
     val id: Long,
-    val name: String,
+    val title: String,
     val description: String,
     val imageUrl: String,
-    val bookmarkStatus: Boolean = false
+    val characterId: Long
 ) : BaseCache

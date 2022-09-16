@@ -14,6 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -21,6 +22,12 @@ import androidx.compose.ui.unit.dp
 import coil.compose.SubcomposeAsyncImage
 import com.velotio.marvelcomic.presentation.state.CharacterViewState
 import com.velotio.marvelcomic.presentation.theme.MarvelComicTheme
+import com.velotio.marvelcomic.R
+
+/*
+* Single entity card for Character
+* */
+
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -50,7 +57,7 @@ internal fun CharacterTile(
                             CircularProgressIndicator()
                         },
                         contentScale = ContentScale.Inside,
-                        contentDescription = "Character Image"
+                        contentDescription = stringResource(id = R.string.character_image)
                     )
                 }
                 Text(
@@ -69,7 +76,7 @@ internal fun CharacterTile(
                 Text(
                     modifier = Modifier
                         .padding(start = 10.dp, end = 10.dp, bottom = 8.dp),
-                    text = state.description.ifEmpty { "Description not available" },
+                    text = state.description.ifEmpty { stringResource(id = R.string.description_not_available) },
                     style = MaterialTheme.typography.subtitle2,
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1
@@ -92,7 +99,7 @@ internal fun CharacterTile(
                 ) {
                     Icon(
                         imageVector = if (state.bookmarkStatus) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder,
-                        contentDescription = "Character Image",
+                        contentDescription = stringResource(id = R.string.favorite_icon),
                         tint = Color.Red
                     )
                 }

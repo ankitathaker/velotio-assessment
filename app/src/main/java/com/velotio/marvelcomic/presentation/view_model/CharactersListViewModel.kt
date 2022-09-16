@@ -13,6 +13,10 @@ import java.net.ConnectException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 
+/*
+* View Model for character page
+* */
+
 class CharactersListViewModel(
     private val getCharacters: GetCharacters,
     private val toggleCharacterBookmarkStatus: ToggleCharacterBookmarkStatus
@@ -37,58 +41,6 @@ class CharactersListViewModel(
             }.map { list ->
                 _characters.value = UiState.Loaded(list.toViewState())
             }.launchIn(viewModelScope)
-
-        /*viewModelScope.launch {
-
-            try {
-
-                val listFlow = getCharacters.invoke()
-
-                listFlow.map { list ->
-                    _characters.value = UiState.Loaded(list.toViewState())
-                }
-
-                *//*_characters.value = UiState.Loaded(
-                    listOf(
-                        CharacterViewState(
-                            name = "Iron Man aka Tony Stark",
-                            description = "Description Description Description Description Description Description Description Description Description",
-                            imageUrl = "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg"
-                        ),
-                        CharacterViewState(
-                            name = "Captain America",
-                            description = "Description Description Description Description Description Description Description Description Description",
-                            imageUrl = "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg"
-                        ),
-                        CharacterViewState(
-                            name = "Black Widow",
-                            description = "Description Description Description Description Description Description Description Description Description",
-                            imageUrl = "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg"
-                        ),
-                        CharacterViewState(
-                            name = "Mighty Thor",
-                            description = "Description Description Description Description Description Description Description Description Description",
-                            imageUrl = "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg"
-                        ),
-                        CharacterViewState(
-                            name = "Spider-Man",
-                            description = "Description Description Description Description Description Description Description Description Description",
-                            imageUrl = "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg"
-                        )
-                    )
-                )*//*
-
-            } catch (e: Throwable) {
-                e.printStackTrace()
-                when (e) {
-                    is UnknownHostException, is ConnectException, is SocketTimeoutException -> _characters.value =
-                        UiState.NoInternetError(e)
-                    else -> _characters.value = UiState.ApiError(e)
-                }
-
-            }
-
-    }*/
     }
 
     fun refresh() = getAllCharacters(forceRefresh = true)

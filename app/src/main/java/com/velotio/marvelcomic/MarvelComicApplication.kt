@@ -3,10 +3,10 @@ package com.velotio.marvelcomic
 import android.app.Application
 import androidx.appcompat.app.AppCompatDelegate
 import com.velotio.marvelcomic.core.di.charactersModule
-import com.velotio.marvelcomic.core.provideAppDatabase
+import com.velotio.marvelcomic.core.di.comicsModule
+import com.velotio.marvelcomic.core.di.commonDependencies
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
-import org.koin.dsl.module
 
 class MarvelComicApplication : Application() {
     override fun onCreate() {
@@ -21,18 +21,12 @@ class MarvelComicApplication : Application() {
         startKoin {
             androidContext(this@MarvelComicApplication)
             /*
-            * Initialized local database
+            * Initialized dependency modules
             * */
             modules(
-                module {
-                    single {
-                        provideAppDatabase(get())
-                    }
-                }
-            )
-
-            modules(
-                charactersModule()
+                commonDependencies(),
+                charactersModule(),
+                comicsModule()
             )
         }
     }

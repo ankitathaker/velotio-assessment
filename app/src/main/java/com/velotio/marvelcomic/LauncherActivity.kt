@@ -5,7 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.velotio.marvelcomic.presentation.compose.CharactersListScaffold
+import com.velotio.marvelcomic.presentation.compose.AppNavigation
 import com.velotio.marvelcomic.presentation.theme.MarvelComicTheme
 
 /*
@@ -14,7 +14,6 @@ import com.velotio.marvelcomic.presentation.theme.MarvelComicTheme
 class LauncherActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContent {
             Content()
         }
@@ -23,7 +22,7 @@ class LauncherActivity : ComponentActivity() {
     @Composable
     fun Content(modifier: Modifier = Modifier) {
         MarvelComicTheme {
-            CharactersListScaffold(
+            AppNavigation(
                 closeAction = {
                     finish()
                 },

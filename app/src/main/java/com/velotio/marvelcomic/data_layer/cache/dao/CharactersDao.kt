@@ -1,40 +1,32 @@
 package com.velotio.marvelcomic.data_layer.cache.dao
 
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Query
 import com.velotio.marvelcomic.data_layer.cache.model.CharacterCache
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface CharactersDao {
+abstract class CharactersDao : BaseDao<CharacterCache>() {
 
-    suspend fun upsert(list: List<CharacterCache>) {
-        list.forEach { cache ->
-            upsert(cache)
-        }
-    }
-
-    suspend fun upsert(cache: CharacterCache) {
-        getCharacter(cache.id)?.let { availableCache ->
-            update(
-                characterCache = cache.copy(
+    override suspend fun upsert(cache: CharacterCache) {
+        super.upsert(
+            cache = getCharacter(cache.id)?.let { availableCache ->
+                cache.copy(
                     bookmarkStatus = availableCache.bookmarkStatus
                 )
-            )
-        } ?: insert(cache)
+            } ?: cache
+        )
     }
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insert(characterCache: CharacterCache): Long
-
-    @Update(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun update(characterCache: CharacterCache): Int
-
     @Query("SELECT * FROM CharacterCache")
-    fun getCharacters(): Flow<List<CharacterCache>>
+    abstract fun getCharacters(): Flow<List<CharacterCache>>
 
     @Query("SELECT * FROM CharacterCache WHERE id=:id")
-    suspend fun getCharacter(id: Long): CharacterCache?
+    abstract suspend fun getCharacter(id: Long): CharacterCache?
+
+    @Query("SELECT * FROM CharacterCache WHERE id=:id")
+    abstract fun getCharacterFlow(id: Long): Flow<CharacterCache>
 
     @Query("UPDATE CharacterCache SET bookmarkStatus = :status WHERE id = :id")
-    suspend fun toggleCharacterBookmarkStatus(id: Long, status: Boolean): Int
+    abstract suspend fun toggleCharacterBookmarkStatus(id: Long, status: Boolean): Int
 }

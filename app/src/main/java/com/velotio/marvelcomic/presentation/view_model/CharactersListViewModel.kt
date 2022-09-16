@@ -26,6 +26,7 @@ class CharactersListViewModel(
     val characters: StateFlow<UiState<List<CharacterViewState>>> = _characters
 
     init {
+        _characters.value = UiState.Loading()
         getAllCharacters()
     }
 
@@ -43,7 +44,12 @@ class CharactersListViewModel(
             }.launchIn(viewModelScope)
     }
 
-    fun refresh() = getAllCharacters(forceRefresh = true)
+    fun refresh(showLoader: Boolean = false) {
+        if (showLoader) {
+            _characters.value = UiState.Loading()
+        }
+        getAllCharacters(forceRefresh = true)
+    }
 
     fun bookmarkCharacter(characterId: Long) {
         viewModelScope.launch {

@@ -11,7 +11,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.velotio.marvelcomic.R
 import com.velotio.marvelcomic.presentation.UiState
-import com.velotio.marvelcomic.presentation.state.ComicViewState
 import com.velotio.marvelcomic.presentation.theme.MarvelComicTheme
 import com.velotio.marvelcomic.presentation.view_model.ComicListViewModel
 import org.koin.androidx.compose.getViewModel
@@ -58,7 +57,7 @@ fun ComicsListScaffold(
         when (state.value) {
 
             is UiState.Loading -> {
-                CircularProgressIndicator()
+                Loader()
             }
 
             is UiState.Loaded -> {
@@ -70,11 +69,21 @@ fun ComicsListScaffold(
             }
 
             is UiState.ApiError -> {
-                Text(text = (state.value as UiState.ApiError<List<ComicViewState>>).error.stackTraceToString())
+                Info(
+                    messageResource = R.string.api_error,
+                    iconResource = R.drawable.ic_something_went_wrong
+                )
             }
 
             is UiState.NoInternetError -> {
-                Text(text = "No Internet")
+                Info(
+                    messageResource = R.string.no_internet,
+                    iconResource = R.drawable.ic_no_connection,
+                    isInfoOnly = false,
+                    buttonAction = {
+                        comicListViewModel.refresh(showLoader = true)
+                    }
+                )
             }
         }
     }

@@ -15,4 +15,13 @@
     <string name="favorite_icon">Favorite Icon</string>
     <string name="back_icon">Back Icon</string>
 
+    <string name="info_icon">Info Icon</string>
+
+    <string name="no_characters_available">No Characters Available</string>
+    <string name="no_comics_available">No Comics Available</string>
+    <string name="no_internet">Please check your internet connection. Swipe down to try again!</string>
+    <string name="api_error">Something went wrong. Please try again later</string>
+
+    <string name="try_again">Try Again</string>
+
 </resources>

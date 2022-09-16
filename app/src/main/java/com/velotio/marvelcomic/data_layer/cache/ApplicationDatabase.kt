@@ -11,7 +11,7 @@ import com.velotio.marvelcomic.data_layer.cache.model.ComicsCache
 * Local Database
 * */
 @Database(
-    version = 3,
+    version = 1,
     entities = [CharacterCache::class, ComicsCache::class]
 )
 abstract class ApplicationDatabase : RoomDatabase() {

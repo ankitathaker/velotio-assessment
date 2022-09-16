@@ -20,12 +20,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
+import com.velotio.marvelcomic.R
 import com.velotio.marvelcomic.presentation.UiState
-import com.velotio.marvelcomic.presentation.state.CharacterViewState
 import com.velotio.marvelcomic.presentation.theme.MarvelComicTheme
 import com.velotio.marvelcomic.presentation.view_model.CharactersListViewModel
 import org.koin.androidx.compose.getViewModel
-import com.velotio.marvelcomic.R
 
 /*
 * Scaffold(Layout) for Characters list page
@@ -63,7 +62,7 @@ fun CharactersListScaffold(
         when (state.value) {
 
             is UiState.Loading -> {
-                CircularProgressIndicator()
+                Loader()
             }
 
             is UiState.Loaded -> {
@@ -77,37 +76,57 @@ fun CharactersListScaffold(
                         }
                     ) {
                         isRefreshing.value = false
-                        LazyVerticalGrid(
-                            columns = GridCells.Fixed(2),
-                            modifier = Modifier
-                                .padding(5.dp)
-                                .fillMaxSize()
-                        ) {
-                            items(characters) { state ->
-                                CharacterTile(
-                                    state = state,
-                                    characterSelectAction = {
-                                        showComics(state.id)
-                                    },
-                                    bookmarkAction = {
-                                        charactersListViewModel.bookmarkCharacter(state.id)
-                                    },
-                                    modifier = Modifier
-                                        .padding(5.dp)
-                                        .fillMaxHeight(fraction = 0.35f)
-                                )
+
+                        if (characters.isNotEmpty()) {
+
+                            LazyVerticalGrid(
+                                columns = GridCells.Fixed(2),
+                                modifier = Modifier
+                                    .padding(5.dp)
+                                    .fillMaxSize()
+                            ) {
+                                items(characters) { state ->
+                                    CharacterTile(
+                                        state = state,
+                                        characterSelectAction = {
+                                            showComics(state.id)
+                                        },
+                                        bookmarkAction = {
+                                            charactersListViewModel.bookmarkCharacter(state.id)
+                                        },
+                                        modifier = Modifier
+                                            .padding(5.dp)
+                                            .fillMaxHeight(fraction = 0.35f)
+                                    )
+                                }
                             }
+
+                        } else {
+                            Info(
+                                messageResource = R.string.no_characters_available,
+                                iconResource = R.drawable.ic_no_data
+                            )
                         }
                     }
                 }
             }
 
             is UiState.ApiError -> {
-                Text(text = (state.value as UiState.ApiError<List<CharacterViewState>>).error.stackTraceToString())
+                Info(
+                    messageResource = R.string.api_error,
+                    iconResource = R.drawable.ic_something_went_wrong
+                )
             }
 
             is UiState.NoInternetError -> {
-                Text(text = "No Internet")
+                Info(
+                    messageResource = R.string.no_internet,
+                    iconResource = R.drawable.ic_no_connection,
+                    isInfoOnly = false,
+                    buttonAction = {
+                        charactersListViewModel.refresh(showLoader = true)
+                    }
+                )
             }
         }
     }

@@ -10,7 +10,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.SubcomposeAsyncImage
@@ -49,16 +48,12 @@ fun CharacterComicsTile(
             Text(
                 text = stringResource(id = R.string.character_name),
                 style = MaterialTheme.typography.subtitle1,
-                overflow = TextOverflow.Ellipsis,
-                maxLines = 2
             )
             Text(
                 text = state.name,
                 style = MaterialTheme.typography.body1.copy(
                     fontWeight = FontWeight.SemiBold
                 ),
-                overflow = TextOverflow.Ellipsis,
-                maxLines = 2
             )
             Spacer(
                 modifier = Modifier.height(8.dp)
@@ -66,16 +61,12 @@ fun CharacterComicsTile(
             Text(
                 text = stringResource(id = R.string.description),
                 style = MaterialTheme.typography.subtitle1,
-                overflow = TextOverflow.Ellipsis,
-                maxLines = 2
             )
             Text(
                 text = state.description.ifEmpty { stringResource(id = R.string.description_not_available) },
                 style = MaterialTheme.typography.subtitle1.copy(
                     fontWeight = FontWeight.SemiBold
                 ),
-                overflow = TextOverflow.Ellipsis,
-                maxLines = 2
             )
         }
     }

@@ -16,7 +16,7 @@ import java.net.UnknownHostException
 * View Model for Comics page
 * */
 class ComicListViewModel(
-    characterId: Long,
+    private val characterId: Long,
     private val getComics: GetComics,
     private val getCharacter: GetCharacter
 ) : ViewModel() {
@@ -51,4 +51,10 @@ class ComicListViewModel(
             .launchIn(viewModelScope)
     }
 
+    fun refresh(showLoader: Boolean = false) {
+        if (showLoader) {
+            _comics.value = UiState.Loading()
+        }
+        getAllComics(characterId = characterId, forceRefresh = true)
+    }
 }

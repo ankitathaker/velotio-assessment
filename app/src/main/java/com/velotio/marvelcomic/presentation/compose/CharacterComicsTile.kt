@@ -6,6 +6,7 @@ import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
@@ -25,10 +26,11 @@ fun CharacterComicsTile(
     Row(
         modifier = modifier
             .background(color = MaterialTheme.colors.surface)
-            .padding(vertical = 8.dp, horizontal = 0.dp)
+            .padding(vertical = 8.dp, horizontal = 0.dp),
     ) {
         SubcomposeAsyncImage(
             modifier = Modifier
+                .align(CenterVertically)
                 .padding(horizontal = 5.dp)
                 .width(150.dp),
             model = state.imageUrl,
@@ -47,12 +49,12 @@ fun CharacterComicsTile(
         ) {
             Text(
                 text = stringResource(id = R.string.character_name),
-                style = MaterialTheme.typography.subtitle1,
+                style = MaterialTheme.typography.body1,
             )
             Text(
                 text = state.name,
                 style = MaterialTheme.typography.body1.copy(
-                    fontWeight = FontWeight.SemiBold
+                    fontWeight = FontWeight.Black
                 ),
             )
             Spacer(
@@ -60,12 +62,12 @@ fun CharacterComicsTile(
             )
             Text(
                 text = stringResource(id = R.string.description),
-                style = MaterialTheme.typography.subtitle1,
+                style = MaterialTheme.typography.body1,
             )
             Text(
                 text = state.description.ifEmpty { stringResource(id = R.string.description_not_available) },
-                style = MaterialTheme.typography.subtitle1.copy(
-                    fontWeight = FontWeight.SemiBold
+                style = MaterialTheme.typography.body1.copy(
+                    fontWeight = FontWeight.Black
                 ),
             )
         }

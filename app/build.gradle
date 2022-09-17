@@ -95,6 +95,8 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutine_version"
     //To use Kotlin annotation processing tool (kapt)
     kapt "androidx.room:room-compiler:$room_version"
+    //System UI controller library
+    implementation "com.google.accompanist:accompanist-systemuicontroller:0.26.3-beta"
     //UI Tests
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:1.2.1"
     testImplementation "junit:junit:4.13.2"
